@@ -9,3 +9,16 @@ app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}!`);
     console.log('server started.');
 });
+
+app.get('/', (req: express.Request, res: express.Response) => {
+    res.send('File Server');
+});
+
+app.get('/foo', (req: express.Request, res: express.Response) => {
+    res.send('bar');
+});
+
+
+app.get('/my-ip-address', (req: express.Request, res: express.Response) => {
+    res.send(req.ip);
+});
