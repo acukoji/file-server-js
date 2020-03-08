@@ -18,7 +18,8 @@ app.get('/foo', (req: express.Request, res: express.Response) => {
     res.send('bar');
 });
 
-
 app.get('/my-ip-address', (req: express.Request, res: express.Response) => {
     res.send(req.ip);
 });
+
+// TODO: koji create a GET HTTP endpoint that returns latest time
