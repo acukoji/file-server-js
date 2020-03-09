@@ -23,3 +23,4 @@ app.get('/my-ip-address', (req: express.Request, res: express.Response) => {
 });
 
 // TODO: koji create a GET HTTP endpoint that returns latest time
+// Note `const now = new Date();`
