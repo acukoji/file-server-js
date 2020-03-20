@@ -1,4 +1,9 @@
 # File Server JS
+```
+--must be in /Users/kojiotsuka/workspace/file-server-js in terminal to 
+--use this command.
+--Also cntrl C to interrupt process and get pwd prompt
+```
 
 **Build project**
 ```
