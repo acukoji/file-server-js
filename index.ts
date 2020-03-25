@@ -4,11 +4,11 @@ import express, { response } from 'express';
 const app: express.Express = express();
 
 require('./src/controllers/root')(app);
+require('./src/controllers/files')(app);
 
 // dummy endpoints to show how to create endpoints
 require('./src/controllers/foo')(app);
 require('./src/controllers/utils')(app);
-require('./src/controllers/files')(app);
 
 const PORT = process.env.PORT || '3000';
 // for development, choosing 3000 to be the default port if no PORT chosen
