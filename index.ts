@@ -3,15 +3,19 @@ import express, { response } from 'express';
 
 const app: express.Express = express();
 
-require('./src/controllers/foo')(app);
 require('./src/controllers/root')(app);
-require('./src/controllers/utils')(app);
 
+// dummy endpoints to show how to create endpoints
+require('./src/controllers/foo')(app);
+require('./src/controllers/utils')(app);
 
 const PORT = process.env.PORT || '3000';
 // for development, choosing 3000 to be the default port if no PORT chosen
 console.log('server starting....');
-app.listen(PORT, () => {
+
+const server = app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}!`);
     console.log('server started.');
 });
+
+export default server;
