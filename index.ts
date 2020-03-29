@@ -16,7 +16,13 @@ console.log('server starting....');
 
 const server = app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}!`);
-    console.log('server started.');
+    console.log('server started.');  
+});
+
+process.on('SIGINT', () => {
+    server.close(() => {
+      console.log('Process terminated')
+    });
 });
 
 export default server;

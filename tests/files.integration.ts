@@ -10,10 +10,22 @@ import server from '../index';
 // run integ tests
 // jest -c jest.config.integration.js 
 
+
+// ==Server close sequence==
+// start the server
+// run all inte tests
+// afterAll is called, server.close() is started
+// server.close() completes
+// jest detectOpenHandles logic executes
+
 // after all test are executed, shutdown server
-afterAll(() => {
-    server.close();
+afterAll((done: jest.DoneCallback) => {
+    server.close(() => { 
+        done();
+    });
 });
+
+
 
 describe('files', () => {
     it('photo.jpg', async () => {
