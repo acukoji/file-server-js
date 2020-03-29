@@ -11,8 +11,8 @@ import server from '../index';
 // jest -c jest.config.integration.js 
 
 // after all test are executed, shutdown server
-afterAll(() => {
-    server.close();
+afterAll((done) => {
+    server.close(done);
 });
 
 describe('foo', () => {
