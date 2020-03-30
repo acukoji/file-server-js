@@ -1,15 +1,17 @@
-// choose a custom port to run integ tests on
-process.env.PORT = '3334';
-
 // supertest--allows requests to be made programatically to app server in your tests.
 // configure and create an app server once by importing index
 // this instance will be reused for every test.
 import request from 'supertest';
-import server from '../index';
+import http from 'http';
+import { app } from '../src/app';
 
 // run integ tests
 // jest -c jest.config.integration.js 
 
+let server: http.Server;
+beforeAll(() => {
+    server = app.listen();
+})
 
 // ==Server close sequence==
 // start the server
@@ -20,12 +22,10 @@ import server from '../index';
 
 // after all test are executed, shutdown server
 afterAll((done: jest.DoneCallback) => {
-    server.close(() => { 
+    server.close(() => {
         done();
     });
 });
-
-
 
 describe('files', () => {
     it('photo.jpg', async () => {
@@ -39,7 +39,7 @@ describe('files', () => {
         // expect(resp.text).toBe('photo.jpg')
 
         const photoByteLength = 2111089;
-        expect(resp.body instanceof Buffer).toBe(true);
-        expect((resp.body as Buffer).length).toBe(photoByteLength);
+        const photoBuffer: Buffer = resp.body;
+        expect(photoBuffer.length).toBe(photoByteLength);
     });
 })

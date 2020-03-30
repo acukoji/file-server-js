@@ -1,14 +1,17 @@
-// choose a custom port to run integ tests on
-process.env.PORT = '3333';
-
 // supertest--allows requests to be made programatically to app server in your tests.
 // configure and create an app server once by importing index
 // this instance will be reused for every test.
 import request from 'supertest';
-import server from '../index';
+import http from 'http';
+import { app } from '../src/app';
 
 // run integ tests
 // jest -c jest.config.integration.js 
+
+let server: http.Server;
+beforeAll(() => {
+    server = app.listen();
+})
 
 // after all test are executed, shutdown server
 afterAll((done) => {
