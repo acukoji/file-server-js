@@ -64,3 +64,5 @@ typings/
 
 # ignore js files in build
 build/
+
+public/files/
