@@ -5,6 +5,7 @@ export const app: express.Express = express();
 
 require('./controllers/root')(app);
 require('./controllers/files')(app);
+require('./controllers/calc')(app);
 
 // dummy endpoints to show how to create endpoints
 require('./controllers/foo')(app);

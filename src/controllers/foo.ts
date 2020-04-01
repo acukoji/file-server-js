@@ -10,6 +10,7 @@ module.exports = (app: express.Express) => {
         res.send('mouse bar\n');
     });
 
+    // /foo/pow?base=2&exponent=3
     app.get('/foo/pow', (req: express.Request, res: express.Response) => {
         console.log(req.params);
         console.log(req.query);
@@ -24,7 +25,8 @@ module.exports = (app: express.Express) => {
     app.get('/foo/frog', (req: express.Request, res: express.Response) => {
         res.send('real frog bar\n');
     });
-
+    
+    // /foo/pow/2/3
     app.get('/foo/pow/:base/:exponent', (req: express.Request, res: express.Response) => {
         res.send(`pow: ${Math.pow(parseInt(req.params.base), parseInt(req.params.exponent))}\n`);
     });

@@ -13,33 +13,36 @@ beforeAll(() => {
     server = app.listen();
 })
 
-// ==Server close sequence==
-// start the server
-// run all inte tests
-// afterAll is called, server.close() is started
-// server.close() completes
-// jest detectOpenHandles logic executes
-
 // after all test are executed, shutdown server
-afterAll((done: jest.DoneCallback) => {
-    server.close(() => {
-        done();
-    });
+afterAll((done) => {
+    server.close(done);
 });
 
 describe('files', () => {
-    it('photo.jpg', async () => {
+    it('is running', async () => {
         const resp = await request(server)
-            .get('/files/photo.jpg');
+            .get('/');
 
         // assert 200 http status code to confirm server is running
         // for endpoints other than the root, you also get
         // information on what type of in
         expect(resp.status).toBe(200);
-        // expect(resp.text).toBe('photo.jpg')
-
-        const photoByteLength = 2111089;
-        const photoBuffer: Buffer = resp.body;
-        expect(photoBuffer.length).toBe(photoByteLength);
+        //console.log(resp.status)
+        expect(resp.text).toBe('File Server\n')
     });
+
+    //it('photo.jpg', async () => {
+    //    const resp = await request(server)
+    //        .get('/files/photo.jpg');
+//
+    //    // assert 200 http status code to confirm server is running
+    //    // for endpoints other than the root, you also get
+    //    // information on what type of in
+    //    expect(resp.status).toBe(200);
+    //    // expect(resp.text).toBe('photo.jpg')
+//
+    //    const photoByteLength = 2111089;
+    //    const photoBuffer: Buffer = resp.body;
+    //    expect(photoBuffer.length).toBe(photoByteLength);
+    //});
 })
