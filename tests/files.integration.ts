@@ -31,18 +31,17 @@ describe('files', () => {
         expect(resp.text).toBe('File Server\n')
     });
 
-    //it('photo.jpg', async () => {
-    //    const resp = await request(server)
-    //        .get('/files/photo.jpg');
-//
-    //    // assert 200 http status code to confirm server is running
-    //    // for endpoints other than the root, you also get
-    //    // information on what type of in
-    //    expect(resp.status).toBe(200);
-    //    // expect(resp.text).toBe('photo.jpg')
-//
-    //    const photoByteLength = 2111089;
-    //    const photoBuffer: Buffer = resp.body;
-    //    expect(photoBuffer.length).toBe(photoByteLength);
-    //});
+    it('photo.jpg', async () => {
+       const resp = await request(server)
+           .get('/files/photo.jpg');
+
+       // assert 200 http status code to confirm server is running
+       // for endpoints other than the root, you also get
+       // information on what type of in
+       expect(resp.status).toBe(200);
+
+       const photoByteLength = 2111089;
+       const photoBuffer: Buffer = resp.body;
+       expect(photoBuffer.length).toBe(photoByteLength);
+    });
 })
