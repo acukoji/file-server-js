@@ -17,8 +17,8 @@ module.exports = (app: express.Express) => {
         res.send(`pow: ${Math.pow(parseInt(req.query.base), parseInt(req.query.exponent))}\n`);
     });
     // This path co-opts all /foo/x endpoints that do not have addition levels (/)
-    app.get('/foo/:id', (req: express.Request, res: express.Response) => {
-        res.send(`${req.params.id} bar\n`);
+    app.get('/foo/:name', (req: express.Request, res: express.Response) => {
+        res.send(`${req.params.name} bar\n`);
     });
 
     // This path is hidden by /foo/:id

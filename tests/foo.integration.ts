@@ -9,8 +9,8 @@ import { app } from '../src/app';
 // jest -c jest.config.integration.js 
 
 let server: http.Server;
-beforeAll(() => {
-    server = app.listen();
+beforeAll((done) => {
+    server = app.listen(done);
 })
 
 // after all test are executed, shutdown server

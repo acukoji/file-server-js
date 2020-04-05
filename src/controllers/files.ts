@@ -24,16 +24,46 @@ module.exports = (app: express.Express) => {
             const file: fileUpload.UploadedFile = (req.files.file.constructor == Array) ?
                 (<fileUpload.UploadedFile[]>req.files.file)[0] :
                 (<fileUpload.UploadedFile>req.files.file);
-            
+
             //moving file from temp directory to where we want it to be stored
             file.mv('./public/files/' + file.name);
 
             res
-            .status(200)
-            .send({
-                status: true,
-                message: 'File is uploaded'
-            });
+                .status(200)
+                .send({
+                    status: true,
+                    message: 'File is uploaded'
+                });
+        }
+    );
+
+    //endpoint to delete file
+    app.delete('/files/:filename',
+        async (req: express.Request, res: express.Response) => {
+            //making sure there is a file (acutally un-needed due to url endpoint
+            //specifying a :filename)
+            // if(!req.params.filename){
+            //     res
+            //         .status(400)
+            //         .send(`${req.params.filename} deleted\n`)
+            //     return;
+            // }
+
+            // Use the name of the input field (i.e. "file") to retrieve the file
+            // Check the req.files.file type, and only get the first file
+
+            // const file: fileUpload.UploadedFile = (req.files.file.constructor == Array) ?
+            //     (<fileUpload.UploadedFile[]>req.files.file)[0] :
+            //     (<fileUpload.UploadedFile>req.files.file);
+
+            // file.rm('./public/files/' + file.name);
+
+            res
+                .status(200)
+                .send({
+                    status: true,
+                    message: 'Deleted ' + req.params.filename
+                });
         }
     );
 
