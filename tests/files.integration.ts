@@ -48,7 +48,11 @@ describe('files', () => {
     });
 
     it('upload file', async () => {
+        // universally unique id. v4--spec for generating uuid
+        // generates random id to assert on
         const uuid = v4();
+
+        //on client side, we are prepping new file to be uploaded
         const filePath = '/tmp/test-upload.txt';
         // create tmpfile with unique number 
         await fs.promises.writeFile(filePath, uuid);
@@ -66,5 +70,43 @@ describe('files', () => {
         // assert contents of file
         expect(getResponse.status).toBe(200);
         expect(getResponse.text).toBe(uuid);
+    });
+
+    // TODO: Koji complete delete integ test
+    // must upload, delete, assert.
+    // request is a function/builder in supertest.
+
+
+    it('delete a file', async () => {
+        const uuid = v4();
+
+        //on client side, we are prepping new file to be uploaded
+        const filePath = '/tmp/test-delete.txt';
+        // create tmpfile with unique number 
+        await fs.promises.writeFile(filePath, uuid);
+
+        // upload tmp file
+        const uploadResp = await request(server)
+            //not a file path.  it's url that expresses
+            //matching to do some action
+            .post('/files.json')
+            .attach('file', filePath);
+        expect(uploadResp.status).toBe(200);
+        expect(uploadResp.body.status).toBe(true);
+
+        // create tmpfile with unique number 
+        //await fs.promises.writeFile(filePath, 'delete file contents');
+
+        // delete uploaded file
+        const deleteResponse = await request(server)
+            .delete('/files/test-delete.txt');
+        // assert contents of file
+        expect(deleteResponse.status).toBe(200);
+
+        // trying to fetch again (should not be there)
+        const getResponse = await request(server)
+            .get('/files/test-delete.txt');
+        // assert contents of file
+        expect(getResponse.status).toBe(404);
     });
 })

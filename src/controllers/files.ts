@@ -1,5 +1,6 @@
 import express from 'express';
 import fileUpload from 'express-fileupload';
+import fs from 'fs';
 
 module.exports = (app: express.Express) => {
     // serves files located in "public" directory
@@ -25,6 +26,8 @@ module.exports = (app: express.Express) => {
                 (<fileUpload.UploadedFile[]>req.files.file)[0] :
                 (<fileUpload.UploadedFile>req.files.file);
 
+            // on server side file first goes to tmp before it can be
+            // moved to public/files.   These are for server-side things.
             //moving file from temp directory to where we want it to be stored
             file.mv('./public/files/' + file.name);
 
@@ -56,8 +59,22 @@ module.exports = (app: express.Express) => {
             //     (<fileUpload.UploadedFile[]>req.files.file)[0] :
             //     (<fileUpload.UploadedFile>req.files.file);
 
-            // file.rm('./public/files/' + file.name);
+            // file.rm('./public/files/' + file.name);           
+            try {
+                await fs.promises.unlink('./public/files/' + req.params.filename);
+            } catch (error) {
+                console.error(error);
+                // throw error
+                res
+                    .status(400)
+                    .send({
+                        status: false,
+                        message: req.params.filename + ' does not exist.'
+                    });
+                return;
+            }
 
+            //run this logic only if we don't catch an error
             res
                 .status(200)
                 .send({
