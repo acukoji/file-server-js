@@ -8,7 +8,7 @@ afterAll(async () => {
 
 describe('mongodb', () => {
     it('is connected', async () => {
-        const client: MongoClient = await MongoDB.getInstance('testDB');
+        const client: MongoClient = await MongoDB.getInstance();
         expect(client.isConnected).toBeTruthy();
     });
 });

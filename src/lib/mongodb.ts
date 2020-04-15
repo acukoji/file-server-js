@@ -1,22 +1,25 @@
 import { MongoClient } from "mongodb";
 
-// Singleteton 
+// Singleton - Design Pattern
 export class MongoDB {
     static instance: MongoClient;
 
-    static async getInstance(db: String): Promise<MongoClient> {
+    static async getInstance(): Promise<MongoClient> {
         if (!MongoDB.instance) {
             const MongoDBOptions = { useUnifiedTopology: true };
             MongoDB.instance = await MongoClient.connect(
-                'mongodb://localhost/' + db,
+                'mongodb://localhost/testDB',
                 MongoDBOptions
             );
         }
         return Promise.resolve(MongoDB.instance);
     }
 
-    static async close(): Promise<void> {
-        return MongoDB.instance.close();
+    static close(): Promise<void> {
+        if(MongoDB.instance) {
+            return MongoDB.instance.close();
+        }
+        return Promise.resolve();
     }
 
     // /**
@@ -31,4 +34,5 @@ export class MongoDB {
     // }
 }
 
-// const mongodbClient1: MongoClient = MongoDB.getInstance('testDB');
+// const mongodbClient1: MongoClient = MongoDB.getInstance();
+// const mongodbClient2: MongoClient = MongoDB.getInstance();
