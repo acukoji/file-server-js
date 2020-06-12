@@ -22,6 +22,7 @@ export class MongoDB {
         return Promise.resolve();
     }
 
+
     // /**
     //  * Helper method to remove all documents for a given db/collection
     //  * @param database Name of MongoDB database
